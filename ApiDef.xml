@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<ApiDef>
+	<Header Name="Primary">
+		<Function Name="include" Return="int" ParamCount="1">
+			<Parameter id="0" Type="lua_State" IsPointer="true" />
+		</Function>
+		<Namespace Name="Const">
+			<Namespace Name="Neighborhood">
+				<Namespace Name="Mode">
+					<Variable Name="Neuman" Type="int" Const="true" />
+					<Variable Name="Moore" Type="int" Const="true" />
+					<Variable Name="HexRandom" Type="int" Const="true" />
+					<Variable Name="HexLeft" Type="int" Const="true" />
+					<Variable Name="HexRight" Type="int" Const="true" />
+					<Variable Name="Pentagonal" Type="int" Const="true" />
+				</Namespace>
+				<Namespace Name="Func">
+					<Variable Name="Basic" Type="int" Const="true" />
+					<Variable Name="Null" Type="int" Const="true" />
+				</Namespace>
+			</Namespace>
+			<Namespace Name="Blender">
+				<Namespace Name="Mode">
+					<Variable Name="ValueTruth" Type="int" Const="true" />
+					<Variable Name="Normalized" Type="int" Const="true" />
+					<Variable Name="Index" Type="int" Const="true" />
+					<Variable Name="Range" Type="int" Const="true" />
+				</Namespace>
+				<Namespace Name="Std">
+					<Variable Name="StateTruth" Type="int" Const="true" />
+				</Namespace>
+			</Namespace>
+			<Namespace Name="Types">
+				<Variable Name="Int" Type="int" Const="true" />
+				<Variable Name="Float" Type="int" Const="true" />
+				<Variable Name="Byte" Type="int" Const="true" />
+			</Namespace>
+			<Namespace Name="Boundary">
+				<Variable Name="Cutted" Type="int" Const="true" />
+				<Variable Name="Circled" Type="int" Const="true" />
+				<Variable Name="Bounced" Type="int" Const="true" />
+			</Namespace>
+		</Namespace>
+		<Namespace Name="api">
+			<Class Name="ExecutionData">
+				<Variable Name="Coord" Type="glm::detail::tvec2&lt;unsigned int&gt;" />
+				<Variable Name="CellPrev" Type="CellContext" />
+				<Variable Name="CellCurr" Type="CellContext" />
+				<Variable Name="CellTable" Type="nSimulation::CellVector" />
+			</Class>
+			<Class Name="SimState">
+				<Function Name="at" Return="CellContext" ParamCount="2">
+					<Parameter id="0" Type="int" />
+					<Parameter id="1" Type="int" />
+				</Function>
+				<Function Name="Time" Const="true" Return="float" ParamCount="0" />
+				<Function Name="PhaseTime" Const="true" Return="float" ParamCount="0" />
+				<Function Name="ForcePhaseEnd" Return="void" ParamCount="0" />
+			</Class>
+			<Class Name="SimParameter" />
+			<Class Name="SimPhase">
+				<Function Name="OnPhaseBegin" Return="void" ParamCount="1">
+					<Parameter id="0" Type="string" IsPointer="true" />
+				</Function>
+				<Function Name="OnPhaseEnd" Return="void" ParamCount="1">
+					<Parameter id="0" Type="string" IsPointer="true" />
+				</Function>
+				<Function Name="AddStep" Return="int" ParamCount="1">
+					<Parameter id="0" Type="lua_State" IsPointer="true" />
+				</Function>
+				<Function Name="OnClick" Return="void" ParamCount="1">
+					<Parameter id="0" Type="string" IsPointer="true" />
+				</Function>
+				<Function Name="SetDuration" Return="void" ParamCount="1">
+					<Parameter id="0" Type="float" />
+				</Function>
+				<Function Name="SetStepLength" Return="void" ParamCount="1">
+					<Parameter id="0" Type="float" />
+				</Function>
+				<Function Name="SetStepCount" Return="void" ParamCount="1">
+					<Parameter id="0" Type="int" />
+				</Function>
+				<Function Name="IgnoreInactive" Return="void" ParamCount="1">
+					<Parameter id="0" Type="bool" />
+				</Function>
+				<Function Name="SetNeighborhoodMode" Return="void" ParamCount="1">
+					<Parameter id="0" Type="int" />
+				</Function>
+				<Function Name="SetNeighborhoodFuncType" Return="void" ParamCount="1">
+					<Parameter id="0" Type="int" />
+				</Function>
+				<Function Name="SetBoundaryMode" Return="void" ParamCount="1">
+					<Parameter id="0" Type="int" />
+				</Function>
+			</Class>
+			<Class Name="PhaseStep" />
+			<Class Name="CellVector">
+				<Function Name="At" Return="CellContext" ParamCount="1">
+					<Parameter id="0" Type="int" />
+				</Function>
+				<Function Name="Count" Const="true" Return="int" ParamCount="0" />
+				<Function Name="SortParameter" Return="void" ParamCount="2">
+					<Parameter id="0" Type="string" IsPointer="true" />
+					<Parameter id="1" Type="bool" />
+				</Function>
+			</Class>
+			<Class Name="WorldContext">
+				<Function Name="at" Return="CellContext" ParamCount="2">
+					<Parameter id="0" Type="int" />
+					<Parameter id="1" Type="int" />
+				</Function>
+			</Class>
+			<Class Name="Simulation">
+				<Function Name="SetName" Return="void" ParamCount="1">
+					<Parameter id="0" Type="string" IsPointer="true" />
+				</Function>
+				<Function Name="SetWorldSize" Return="void" ParamCount="2">
+					<Parameter id="0" Type="int" />
+					<Parameter id="1" Type="int" />
+				</Function>
+				<Function Name="AddParameter" Return="SimParameter" ParamCount="2">
+					<Parameter id="0" Type="string" IsPointer="true" />
+					<Parameter id="1" Type="int" />
+				</Function>
+				<Function Name="CreatePhase" Return="SimPhase" ParamCount="1">
+					<Parameter id="0" Type="string" IsPointer="true" />
+				</Function>
+				<Function Name="ClonePhase" Return="SimPhase" ParamCount="2">
+					<Parameter id="0" Type="SimPhase" IsPointer="true" />
+					<Parameter id="1" Type="string" IsPointer="true" />
+				</Function>
+				<Function Name="OnInitialize" Return="void" ParamCount="1">
+					<Parameter id="0" Type="string" IsPointer="true" />
+				</Function>
+				<Function Name="OnFinalize" Return="void" ParamCount="1">
+					<Parameter id="0" Type="string" IsPointer="true" />
+				</Function>
+				<Function Name="AddBlender" Return="PhaseBlender" ParamCount="1">
+					<Parameter id="0" Type="string" IsPointer="true" />
+				</Function>
+				<Function Name="AddStdBlender" Return="void" ParamCount="2">
+					<Parameter id="0" Type="int" />
+					<Parameter id="1" Type="string" IsPointer="true" />
+				</Function>
+			</Class>
+			<Class Name="PhaseBlender">
+				<Function Name="SetMode" Return="void" ParamCount="1">
+					<Parameter id="0" Type="int" />
+				</Function>
+				<Function Name="SetParameter" Return="void" ParamCount="1">
+					<Parameter id="0" Type="string" IsPointer="true" />
+				</Function>
+				<Function Name="AddColor" Return="void" ParamCount="3">
+					<Parameter id="0" Type="float" />
+					<Parameter id="1" Type="float" />
+					<Parameter id="2" Type="float" />
+				</Function>
+				<Function Name="AddColor4" Return="void" ParamCount="4">
+					<Parameter id="0" Type="float" />
+					<Parameter id="1" Type="float" />
+					<Parameter id="2" Type="float" />
+					<Parameter id="3" Type="float" />
+				</Function>
+				<Function Name="GenerateColorsByBits" Return="void" ParamCount="1">
+					<Parameter id="0" Type="unsigned int" />
+				</Function>
+				<Function Name="SetOptions" MultiParam="true" MultiRet="true" />
+			</Class>
+			<Class Name="PhaseStepData">
+				<Variable Name="State" Type="SimState" />
+				<Variable Name="Phase" Type="SimPhase" />
+			</Class>
+			<Class Name="uvec2">
+				<Variable Name="x" Type="unsigned int" />
+				<Variable Name="y" Type="unsigned int" />
+			</Class>
+		</Namespace>
+		<Namespace Name="xmath">
+			<Function Name="RandRange" Return="int" ParamCount="2">
+				<Parameter id="0" Type="int" />
+				<Parameter id="1" Type="int" />
+			</Function>
+			<Function Name="BoolRand" Return="bool" ParamCount="0" />
+		</Namespace>
+	</Header>
+</ApiDef>
